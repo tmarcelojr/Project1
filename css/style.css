@@ -1,0 +1,22 @@
+body {
+	background-color: rgb(250, 248, 240);
+}
+
+.tile {
+	border: 1px solid black;
+	height: 94px;
+	width: 94px;
+	border-radius: 3px;
+	text-align: center;
+	font-weight: bold;
+	margin: 15px 0px 0px 15px;
+}
+
+#container {
+	box-sizing: border-box;
+	display: flex;
+	height: 460px;
+	width: 460px;
+	border-radius: 6px;
+	background-color: #bbada0;
+}
