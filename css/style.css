@@ -3,13 +3,13 @@ body {
 }
 
 .tile {
-	border: 1px solid black;
 	height: 94px;
 	width: 94px;
-	border-radius: 3px;
 	text-align: center;
 	font-weight: bold;
-	margin: 15px 0px 0px 15px;
+	border-radius: 3px;
+	margin: 17px 0px 0px 17px;
+	background-color: rgba(238, 228, 218, 0.35);
 }
 
 #container {
