@@ -1,22 +1,23 @@
 body {
 	background-color: rgb(250, 248, 240);
+	text-align: center;
 }
 
 .tile {
 	height: 94px;
 	width: 94px;
-	text-align: center;
 	font-weight: bold;
 	border-radius: 3px;
 	margin: 17px 0px 0px 17px;
 	background-color: rgba(238, 228, 218, 0.35);
+	display: inline-block;
+	justify-content: space-between;
 }
 
 #container {
-	box-sizing: border-box;
-	display: flex;
-	height: 460px;
-	width: 460px;
+	display: inline-block;
+	height: 470px;
+	width: 470px;
 	border-radius: 6px;
 	background-color: #bbada0;
 }
