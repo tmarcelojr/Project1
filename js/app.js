@@ -69,11 +69,21 @@ const game = {
 	// ===== Goal: Use these functions for keydown presses =====
 	//			Use: $(`#${i}`).html() to call 
 	left() {
-		let combineOnce = 0
+		// Shift all the cells to the left before combining
+		for(let i = 0; i < 4; i++){
+			for(let j = 0; j < 15; j++) {
+				const first = j - 1
+				if($(`#${j}`).html() > 0 && $(`#${first}`).html() == '' && first != 3 && first != 7 && first != 11 && first != 15) {
+					$(`#${j - 1}`).html($(`#${j}`).html())
+					$(`#${j}`).html('')
+				}
+			}
+		}
 		// Loop 4 times since there are 4 tiles per row
-		for(let j = 0; j < 4; j++) { 
-			// Loop 16 times for each tile
-			for(let i = j * 4; i <= (j * 4) + 3 ; i++) {
+		for(let k = 0; k < 4; k++) { 
+			// j * 4 it will only run on tiles 4, 8, 12 -- beginning of row
+			// (j < 4) + 3 it will run only for this row
+			for(let l = k * 4; l <= (k * 4) + 3 ; l++) {
 				/*
 				1) If current div has a value & the div before it has no value
 					switch positions
@@ -82,19 +92,19 @@ const game = {
 
 				3) Combine tiles if same value
 				*/
-				const a = i - 1
-				const b = parseInt($(`#${i}`).html())
+				const a = l - 1
+				const b = parseInt($(`#${l}`).html())
 				const c = parseInt($(`#${a}`).html())
-				const d = $(`#${i}`).html() //2
+				const d = $(`#${l}`).html() //2
 				const e = $(`#${a}`).html() //''
 				// if a and i are not on diff rows
 				if(d > 0 && e == '' && a != 3 && a != 7 && a != 11 && a != 15) {
 					$(`#${a}`).html(d)
-					$(`#${i}`).html('')
+					$(`#${l}`).html('')
 				}
 				if(d == e) {
 					$(`#${a}`).html(b + c)
-					$(`#${i}`).html('')
+					$(`#${l}`).html('')
 				}
 			}
 		}
