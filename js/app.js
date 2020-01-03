@@ -72,9 +72,9 @@ const game = {
 		// Shift all the cells to the left before combining
 		for(let i = 0; i < 4; i++){
 			for(let j = 0; j < 15; j++) {
-				const first = j - 1
-				if($(`#${j}`).html() > 0 && $(`#${first}`).html() == '' && first != 3 && first != 7 && first != 11 && first != 15) {
-					$(`#${j - 1}`).html($(`#${j}`).html())
+				const left = j - 1
+				if($(`#${j}`).html() > 0 && $(`#${left}`).html() == '' && left != 3 && left != 7 && left != 11 && left != 15) {
+					$(`#${left}`).html($(`#${j}`).html())
 					$(`#${j}`).html('')
 				}
 			}
@@ -95,8 +95,8 @@ const game = {
 				const a = l - 1
 				const b = parseInt($(`#${l}`).html())
 				const c = parseInt($(`#${a}`).html())
-				const d = $(`#${l}`).html() //2
-				const e = $(`#${a}`).html() //''
+				const d = $(`#${l}`).html() 
+				const e = $(`#${a}`).html() 
 				// if a and i are not on diff rows
 				if(d > 0 && e == '' && a != 3 && a != 7 && a != 11 && a != 15) {
 					$(`#${a}`).html(d)
@@ -108,18 +108,132 @@ const game = {
 				}
 			}
 		}
+		// Shift again after combining cells 
+		for(let i = 0; i < 4; i++){
+			for(let j = 0; j < 15; j++) {
+				const left = j - 1
+				if($(`#${j}`).html() > 0 && $(`#${left}`).html() == '' && left != 3 && left != 7 && left != 11 && left != 15) {
+					$(`#${j - 1}`).html($(`#${j}`).html())
+					$(`#${j}`).html('')
+				}
+			}
+		}
 	},
 	
 	right() {
-
+		for(let i = 0; i < 4; i++){
+			for(let j = 15; j > 0; j--) {
+				const right = j + 1
+				if($(`#${j}`).html() > 0 && $(`#${right}`).html() == '' && right != 4 && right != 8 && right != 12) {
+					$(`#${right}`).html($(`#${j}`).html())
+					$(`#${j}`).html('')
+				}
+			}
+		}
+		for(let k = 0; k < 4; k++) { 
+			for(let l = k * 4; l <= (k * 4) + 3 ; l++) {
+				const a = l + 1
+				const b = parseInt($(`#${l}`).html())
+				const c = parseInt($(`#${a}`).html())
+				const d = $(`#${l}`).html()
+				const e = $(`#${a}`).html() 
+				if(d > 0 && e == '' && a != 4 && a != 8 && a != 12) {
+					$(`#${a}`).html(d)
+					$(`#${l}`).html('')
+				}
+				if(d == e) {
+					$(`#${a}`).html(b + c)
+					$(`#${l}`).html('')
+				}
+			}
+		}
+		for(let i = 0; i < 4; i++){
+			for(let j = 15; j > 0; j--) {
+				const right = j + 1
+				if($(`#${j}`).html() > 0 && $(`#${right}`).html() == '' && right != 4 && right != 8 && right != 12) {
+					$(`#${right}`).html($(`#${j}`).html())
+					$(`#${j}`).html('')
+				}
+			}
+		}
 	},
 	
 	top() {
-
+		for(let i = 0; i < 4; i++){
+			for(let j = 0; j < 15; j++) {
+				const up = j - 4
+				if($(`#${j}`).html() > 0 && $(`#${up}`).html() == '') {
+					$(`#${up}`).html($(`#${j}`).html())
+					$(`#${j}`).html('')
+				}
+			}
+		}
+		for(let k = 0; k < 4; k++) { 
+			for(let l = k * 4; l <= (k * 4) + 3 ; l++) {
+				const a = l - 4
+				const b = parseInt($(`#${l}`).html())
+				const c = parseInt($(`#${a}`).html())
+				const d = $(`#${l}`).html() //2
+				const e = $(`#${a}`).html() //''
+				// if a and i are not on diff rows
+				if(d > 0 && e == '') {
+					$(`#${a}`).html(d)
+					$(`#${l}`).html('')
+				}
+				if(d == e) {
+					$(`#${a}`).html(b + c)
+					$(`#${l}`).html('')
+				}
+			}
+		}
+		for(let i = 0; i < 4; i++){
+			for(let j = 0; j < 15; j++) {
+				const up = j - 4
+				if($(`#${j}`).html() > 0 && $(`#${up}`).html() == '') {
+					$(`#${up}`).html($(`#${j}`).html())
+					$(`#${j}`).html('')
+				}
+			}
+		}
 	},
 
 	down() {
-
+		for(let i = 0; i < 4; i++){
+			for(let j = 15; j > 0; j--) {
+				const down = j + 4
+				if($(`#${j}`).html() > 0 && $(`#${down}`).html() == '') {
+					$(`#${down}`).html($(`#${j}`).html())
+					$(`#${j}`).html('')
+				}
+			}
+		}
+		for(let k = 0; k < 4; k++) { 
+			for(let l = k * 4; l <= (k * 4) + 3 ; l++) {
+				const a = l + 4
+				const b = parseInt($(`#${l}`).html())
+				const c = parseInt($(`#${a}`).html())
+				const d = $(`#${l}`).html() //2
+				const e = $(`#${a}`).html() //''
+				// if a and i are not on diff rows
+				if(d > 0 && e == '') {
+					$(`#${a}`).html(d)
+					$(`#${l}`).html('')
+				}
+				if(d == e) {
+					$(`#${a}`).html(b + c)
+					$(`#${l}`).html('')
+				}
+			}
+		}
+		for(let i = 0; i < 4; i++){
+			for(let j = 15; j > 0; j--) {
+				const down = j + 4
+				if($(`#${j}`).html() > 0 && $(`#${down}`).html() == '') {
+					$(`#${down}`).html($(`#${j}`).html())
+					$(`#${j}`).html('')
+				}
+			}
+		}
 	},
 
 }
@@ -130,17 +244,21 @@ $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
         	game.left() 
+        	game.newTile()
         break;
 
         case 38: // up
+        	game.top()
         	game.newTile()
         break;
 
         case 39: // right
+          	game.right()
           	game.newTile()
         break;
 
         case 40: // down
+          	game.down()
           	game.newTile()
         break;
 
