@@ -6,130 +6,110 @@ const game = {
 
 	*/
 
-	$gameBox: [
+	gameBox: [
 		[0, 0, 0, 0],
 		[0, 0, 0, 0],
 		[0, 0, 0, 0],
 		[0, 0, 0, 0]
 	],
 
+	randomTile: 0,
 	tileNumbers: [],
-	tileCoordinates: [],
 
 	newGame() {
+		this.randomTiles()
+		this.createGrid()
+		this.firstTwoTiles()
 	},
 
+	// Display two random tiles on board with values 2 or 4
+	firstTwoTiles() {
+		let firstTile = Math.floor(Math.random() * 15)
+		let secondTile = Math.floor(Math.random() * 15)
+		// Avoids error if both tiles land on the same div
+		if(firstTile === secondTile) {
+			secondTile = firstTile++
+		}
+		$('.tile').eq(firstTile).text(this.randomTile)
+		$('.tile').eq(secondTile).text(this.randomTile)
+	},
+	// Assigns 2 or 4 value to variable
+	randomTiles() {
+		const randomValue = Math.random()
+		this.randomTile = randomValue > 0.5 ? 2 : 4
+		// console.log(this.randomTile);
+	},
+	// Creates a single tile after each move
 	newTile() {
-		/* ==== Assign coordinates to array =====
-		Goal: write a nested for loop, assign x and y values
-		*/
-		for(let i = 0; i < 4; i++) {
-			for(let j = 0; j < 4; j++) {
-				if(this.$gameBox[i][j] === 0) {
-					this.tileNumbers.push({
-						x: i,
-						y: j
-					})
-				}
+		// Arr to put all the tiles without a number
+		const emptyTiles = []
+		for(let i = 0; i < 16; i++) {
+			if($(`#${i}`).html() == '') {
+				emptyTiles.push(i)
 			}
 		}
-
-		/* ===== Random Assignment =====
-		Goal: random coordinates and assign values
-		*/
-		if(this.tileNumbers.length > 0) {
-			// console.log($tileNumbers);
-			let randomTile = this.tileNumbers[Math.floor(Math.random() * this.tileNumbers.length)]
-			// console.log(randomTile);
-			let randomValue = Math.random()
-
-			// if($random > 0.5){
-			// 	this.$gameBox[$randomTile.x][$randomTile.y] = 2
-			// }
-			// else {
-			// 	this.$gameBox[$randomTile.x][$randomTile.y] = 4
-			// }
-
-			// $random > 0.5 ? this.$gameBox[$randomTile.x][$randomTile.y] = 2
-			// : this.$gameBox[$randomTile.x][$randomTile.y] = 4
-
-			// gray = 5 ? red = 3 ? red= 10 : red=  0 : undefined
-			let random = this.$gameBox[randomTile.x][randomTile.y] = randomValue > 0.5 ? 2 : 4
-			// console.log(randomTile.x);
-			// console.log(randomTile.y);
-			let assignTile = `${randomTile.x}${randomTile.y}`
-			console.log(assignTile);
-
-			for(let i = 0; i < this.tileCoordinates.length; i++) {
-				const coordinate = this.tileCoordinates[i]
-				// console.log(coordinate);
-				if(this.tileCoordinates[i] == assignTile) {
-					console.log('works');
-					console.log('this is random', random)
-					if(assignTile ==  $('.tile')[i].id) {
-						// $('#').css('background-color', 'red')
-					}
-				}
-			}
-			
-		}
-		
+		const randomEmptyTile = emptyTiles[Math.floor(Math.random() * emptyTiles.length)]
+		this.randomTiles()
+		$(`#${randomEmptyTile}`).html(this.randomTile)
 	},
-
+	// Creates the gameboard
 	createGrid() {
-		for(let i = 0; i < 16; i++) {
-			const tile = document.createElement('div')
-			tile.setAttribute('class', `tile`)
-			const id = `${this.tileNumbers[i].x}${this.tileNumbers[i].y}`
-			tile.setAttribute('id', id)
-			tile.innerText = 2
-			this.tileCoordinates.push(id)
-			$('#container').append(tile)
-			// console.log($('.tile')[i].id)
+		for(let i = 0; i < 4; i++) {
+			const row = document.createElement('div')
+			row.setAttribute('class', 'row')
+			$('#container').append(row)
+				for(let j = 0; j < 4; j++) {
+					const tile = document.createElement('div')
+					tile.setAttribute('class', 'tile')
+					$('.row')[i].append(tile)
+				}
 		}
-		console.log(this.tileCoordinates);
+		for(let i = 0; i < 16; i++) {
+			$('.tile')[i].setAttribute('id', i)
+		}
+
+	},
+	// Goal: Use this to update the board after tiles move
+	displayGrid() {
+	},
+	
+	// ===== Goal: Use these functions for keydown presses =====
+	left() {
+		let tileChanged = 0;
+	},
+	
+	right() {
+
+	},
+	
+	top() {
+
 	},
 
-	combineTile() {
-		for(let i = 0; i < 16; i++) {
-			console.log($('.tile')[i].innerText);
-			if($('.tile')[i].innerText % 2 === 0) {
-				console.log('works');
-				$('')
-			}
-		}
-	}
+	down() {
+
+	},
 
 }
 
-game.newTile()
-game.newTile()
-console.table(game.$gameBox); // LIFE SAVER...See changes as table
-game.createGrid()
-game.newTile()
-// game.combineTile()
-
-console.log($('#00')[0].innerText);
-console.log($('#01')[0].innerText);
+game.newGame()
 
 $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
-        alert('left pressed')
-        if($('#00')[0].innerText === $('#01')[0].innerText) {
-        	$('#01')[0].innerText = 0
-        	$('#00')[0].innerText = 4
-        }
-        
+        	game.newTile() 
         break;
 
         case 38: // up
+        	game.newTile()
         break;
 
         case 39: // right
+          	game.newTile()
         break;
 
         case 40: // down
+          	game.newTile()
         break;
 
         default: return; // exit this handler for other keys

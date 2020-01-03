@@ -11,13 +11,15 @@ body {
 	margin: 17px 0px 0px 17px;
 	background-color: rgba(238, 228, 218, 0.35);
 	display: inline-block;
-	justify-content: space-between;
+	overflow: hidden;
+	font-size: 86px;
+
 }
 
 #container {
-	display: inline-block;
 	height: 470px;
 	width: 470px;
 	border-radius: 6px;
 	background-color: #bbada0;
+	text-align: center;
 }
