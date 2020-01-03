@@ -106,18 +106,19 @@ const game = {
 					$(`#${a}`).html(b + c)
 					$(`#${l}`).html('')
 				}
-			}
-		}
-		// Shift again after combining cells 
-		for(let i = 0; i < 4; i++){
-			for(let j = 0; j < 15; j++) {
-				const left = j - 1
-				if($(`#${j}`).html() > 0 && $(`#${left}`).html() == '' && left != 3 && left != 7 && left != 11 && left != 15) {
-					$(`#${j - 1}`).html($(`#${j}`).html())
-					$(`#${j}`).html('')
+				// Shift again after combining cells 
+				for(let i = 0; i < 4; i++){
+					for(let j = 0; j < 15; j++) {
+						const left = j - 1
+						if($(`#${j}`).html() > 0 && $(`#${left}`).html() == '' && left != 3 && left != 7 && left != 11 && left != 15) {
+							$(`#${left}`).html($(`#${j}`).html())
+							$(`#${j}`).html('')
+						}
+					}
 				}
 			}
 		}
+		
 	},
 	
 	right() {
@@ -130,14 +131,14 @@ const game = {
 				}
 			}
 		}
-		for(let k = 0; k < 4; k++) { 
-			for(let l = k * 4; l <= (k * 4) + 3 ; l++) {
+		for(let k = 4; k >= 0; k--) { 
+			for(let l = k * 4 + 3; l >= (k * 4); l--) {
 				const a = l + 1
 				const b = parseInt($(`#${l}`).html())
 				const c = parseInt($(`#${a}`).html())
 				const d = $(`#${l}`).html()
 				const e = $(`#${a}`).html() 
-				if(d > 0 && e == '' && a != 4 && a != 8 && a != 12) {
+				if(d > 0 && e == '' && a != 0 && a != 4 && a != 8 && a != 12) {
 					$(`#${a}`).html(d)
 					$(`#${l}`).html('')
 				}
@@ -145,14 +146,14 @@ const game = {
 					$(`#${a}`).html(b + c)
 					$(`#${l}`).html('')
 				}
-			}
-		}
-		for(let i = 0; i < 4; i++){
-			for(let j = 15; j > 0; j--) {
-				const right = j + 1
-				if($(`#${j}`).html() > 0 && $(`#${right}`).html() == '' && right != 4 && right != 8 && right != 12) {
-					$(`#${right}`).html($(`#${j}`).html())
-					$(`#${j}`).html('')
+				for(let i = 0; i < 4; i++){
+					for(let j = 15; j > 0; j--) {
+						const right = j + 1
+						if($(`#${j}`).html() > 0 && $(`#${right}`).html() == '' && right != 4 && right != 8 && right != 12) {
+							$(`#${right}`).html($(`#${j}`).html())
+							$(`#${j}`).html('')
+						}
+					}
 				}
 			}
 		}
