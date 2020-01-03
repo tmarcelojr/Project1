@@ -51,11 +51,11 @@ const game = {
 			const row = document.createElement('div')
 			row.setAttribute('class', 'row')
 			$('#container').append(row)
-				for(let j = 0; j < 4; j++) {
-					const tile = document.createElement('div')
-					tile.setAttribute('class', 'tile')
-					$('.row')[i].append(tile)
-				}
+			for(let j = 0; j < 4; j++) {
+				const tile = document.createElement('div')
+				tile.setAttribute('class', 'tile') // .classList.add('') or .addClass()
+				$('.row')[i].append(tile)
+			}
 		}
 		for(let i = 0; i < 16; i++) {
 			$('.tile')[i].setAttribute('id', i)
@@ -69,10 +69,11 @@ const game = {
 	// ===== Goal: Use these functions for keydown presses =====
 	//			Use: $(`#${i}`).html() to call 
 	left() {
+		let combineOnce = 0
 		// Loop 4 times since there are 4 tiles per row
-		for(let i = 0; i < 4; i++) {
-			// Loo[ 16 times for each tile
-			for(let i = 0; i < 16; i++) {
+		for(let j = 0; j < 4; j++) { 
+			// Loop 16 times for each tile
+			for(let i = j * 4; i <= (j * 4) + 3 ; i++) {
 				/*
 				1) If current div has a value & the div before it has no value
 					switch positions
@@ -83,13 +84,15 @@ const game = {
 				*/
 				const a = i - 1
 				const b = parseInt($(`#${i}`).html())
-				const c = parseInt($(`#${i}`).html())
-				if($(`#${i}`).html() > 0 && $(`#${a}`).html() == '' && a != 3 && a != 7 && a != 11 && a != 15) {
-					let newTile = $(`#${i}`).html()
-					$(`#${a}`).html(newTile)
+				const c = parseInt($(`#${a}`).html())
+				const d = $(`#${i}`).html() //2
+				const e = $(`#${a}`).html() //''
+				// if a and i are not on diff rows
+				if(d > 0 && e == '' && a != 3 && a != 7 && a != 11 && a != 15) {
+					$(`#${a}`).html(d)
 					$(`#${i}`).html('')
 				}
-				if($(`#${i}`).html() == $(`#${a}`).html()) {
+				if(d == e) {
 					$(`#${a}`).html(b + c)
 					$(`#${i}`).html('')
 				}
