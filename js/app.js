@@ -159,7 +159,7 @@ const game = {
 		}
 	},
 	
-	top() {
+	up() {
 		for(let i = 0; i < 4; i++){
 			for(let j = 0; j < 15; j++) {
 				const up = j - 4
@@ -185,17 +185,18 @@ const game = {
 					$(`#${a}`).html(b + c)
 					$(`#${l}`).html('')
 				}
-			}
-		}
-		for(let i = 0; i < 4; i++){
-			for(let j = 0; j < 15; j++) {
-				const up = j - 4
-				if($(`#${j}`).html() > 0 && $(`#${up}`).html() == '') {
-					$(`#${up}`).html($(`#${j}`).html())
-					$(`#${j}`).html('')
+				for(let i = 0; i < 4; i++){
+					for(let j = 0; j < 15; j++) {
+						const up = j - 4
+						if($(`#${j}`).html() > 0 && $(`#${up}`).html() == '') {
+							$(`#${up}`).html($(`#${j}`).html())
+							$(`#${j}`).html('')
+						}
+					}
 				}
 			}
 		}
+		
 	},
 
 	down() {
@@ -208,8 +209,8 @@ const game = {
 				}
 			}
 		}
-		for(let k = 0; k < 4; k++) { 
-			for(let l = k * 4; l <= (k * 4) + 3 ; l++) {
+		for(let k = 4; k >= 0; k--) { 
+			for(let l = k * 4 + 3; l >= (k * 4); l--) {
 				const a = l + 4
 				const b = parseInt($(`#${l}`).html())
 				const c = parseInt($(`#${a}`).html())
@@ -224,14 +225,14 @@ const game = {
 					$(`#${a}`).html(b + c)
 					$(`#${l}`).html('')
 				}
-			}
-		}
-		for(let i = 0; i < 4; i++){
-			for(let j = 15; j > 0; j--) {
-				const down = j + 4
-				if($(`#${j}`).html() > 0 && $(`#${down}`).html() == '') {
-					$(`#${down}`).html($(`#${j}`).html())
-					$(`#${j}`).html('')
+				for(let i = 0; i < 4; i++){
+					for(let j = 15; j > 0; j--) {
+						const down = j + 4
+						if($(`#${j}`).html() > 0 && $(`#${down}`).html() == '') {
+							$(`#${down}`).html($(`#${j}`).html())
+							$(`#${j}`).html('')
+						}
+					}
 				}
 			}
 		}
@@ -249,7 +250,7 @@ $(document).keydown(function(e) {
         break;
 
         case 38: // up
-        	game.top()
+        	game.up()
         	game.newTile()
         break;
 
