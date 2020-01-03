@@ -6,13 +6,6 @@ const game = {
 
 	*/
 
-	gameBox: [
-		[0, 0, 0, 0],
-		[0, 0, 0, 0],
-		[0, 0, 0, 0],
-		[0, 0, 0, 0]
-	],
-
 	randomTile: 0,
 	tileNumbers: [],
 
@@ -74,8 +67,34 @@ const game = {
 	},
 	
 	// ===== Goal: Use these functions for keydown presses =====
+	//			Use: $(`#${i}`).html() to call 
 	left() {
-		let tileChanged = 0;
+		// Loop 4 times since there are 4 tiles per row
+		for(let i = 0; i < 4; i++) {
+			// Loo[ 16 times for each tile
+			for(let i = 0; i < 16; i++) {
+				/*
+				1) If current div has a value & the div before it has no value
+					switch positions
+
+				2) Will only shift in the same row
+
+				3) Combine tiles if same value
+				*/
+				const a = i - 1
+				const b = parseInt($(`#${i}`).html())
+				const c = parseInt($(`#${i}`).html())
+				if($(`#${i}`).html() > 0 && $(`#${a}`).html() == '' && a != 3 && a != 7 && a != 11 && a != 15) {
+					let newTile = $(`#${i}`).html()
+					$(`#${a}`).html(newTile)
+					$(`#${i}`).html('')
+				}
+				if($(`#${i}`).html() == $(`#${a}`).html()) {
+					$(`#${a}`).html(b + c)
+					$(`#${i}`).html('')
+				}
+			}
+		}
 	},
 	
 	right() {
@@ -97,7 +116,7 @@ game.newGame()
 $(document).keydown(function(e) {
     switch(e.which) {
         case 37: // left
-        	game.newTile() 
+        	game.left() 
         break;
 
         case 38: // up
