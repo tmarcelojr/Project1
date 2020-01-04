@@ -1,13 +1,11 @@
 const game = {
-
-	/* ===== new game =====
-	Goal: randomly pick two tiles with values 2 or 4
-
-
-	*/
-
 	randomTile: 0,
 	tileNumbers: [],
+	firstLeftMove: false,
+	firstRightMove: false,
+	firstUpMove: false,
+	firstDownMove: false,
+	movement: false,
 
 	newGame() {
 		this.randomTiles()
@@ -61,207 +59,166 @@ const game = {
 			$('.tile')[i].setAttribute('id', i)
 		}
 
-	},
-	// Goal: Use this to update the board after tiles move
-	displayGrid() {
-	},
-	
-	// ===== Goal: Use these functions for keydown presses =====
-	//			Use: $(`#${i}`).html() to call 
+	},	
 	left() {
-		// Shift all the cells to the left before combining
-		for(let i = 0; i < 4; i++){
+		let movement = 0;
+		// Combine all cells to the left
+		for(let i = 0; i < 4; i++) {
 			for(let j = 0; j < 15; j++) {
-				const left = j - 1
-				if($(`#${j}`).html() > 0 && $(`#${left}`).html() == '' && left != 3 && left != 7 && left != 11 && left != 15) {
-					$(`#${left}`).html($(`#${j}`).html())
-					$(`#${j}`).html('')
-				}
-			}
-		}
-		// Loop 4 times since there are 4 tiles per row
-		for(let k = 0; k < 4; k++) { 
-			// j * 4 it will only run on tiles 4, 8, 12 -- beginning of row
-			// (j < 4) + 3 it will run only for this row
-			for(let l = k * 4; l <= (k * 4) + 3 ; l++) {
+				const curr = $(`#${j}`).html()
+				const next = $(`#${j + 1}`).html();
 				/*
-				1) If current div has a value & the div before it has no value
-					switch positions
-
-				2) Will only shift in the same row
-
-				3) Combine tiles if same value
+					3, 7, 11 , 15 are the indexes of farthest right tiles 
+					Prevents tiles from going to the row above.
+					Combine if adjacent tiles are equal
 				*/
-				const a = l - 1
-				const b = parseInt($(`#${l}`).html())
-				const c = parseInt($(`#${a}`).html())
-				const d = $(`#${l}`).html() 
-				const e = $(`#${a}`).html() 
-				// if a and i are not on diff rows
-				if(d > 0 && e == '' && a != 3 && a != 7 && a != 11 && a != 15) {
-					$(`#${a}`).html(d)
-					$(`#${l}`).html('')
+				if(curr > 0 && j != 3 && j != 7 && j != 11 && j != 15 && (curr == next)) {
+					let newValue = (2 * parseInt(curr));
+					$(`#${j}`).html(newValue);
+					$(`#${j + 1}`).html('');
+					movement = 1;
+				// update score here later
 				}
-				if(d == e) {
-					$(`#${a}`).html(b + c)
-					$(`#${l}`).html('')
-				}
-				// Shift again after combining cells 
-				for(let i = 0; i < 4; i++){
-					for(let j = 0; j < 15; j++) {
-						const left = j - 1
-						if($(`#${j}`).html() > 0 && $(`#${left}`).html() == '' && left != 3 && left != 7 && left != 11 && left != 15) {
-							$(`#${left}`).html($(`#${j}`).html())
-							$(`#${j}`).html('')
-						}
+				if(curr == '' && j != 3 && j != 7 && j != 11 && j != 15) {
+					let newValue = next
+					// If current tile has no value and adj tile, no combining
+					if(j != 3 && j != 7 && j != 11 && j != 15 && ((curr != '') || (next != ''))) {
+						movement = 1;
 					}
+					// Current and next tile both empty
+					$(`#${j}`).html(newValue);
+					$(`#${j + 1}`).html('');
 				}
 			}
 		}
-		
+		// New tile if movement is made
+		if(movement) {
+			this.newTile();
+		}
 	},
-	
 	right() {
-		for(let i = 0; i < 4; i++){
-			for(let j = 15; j > 0; j--) {
-				const right = j + 1
-				if($(`#${j}`).html() > 0 && $(`#${right}`).html() == '' && right != 4 && right != 8 && right != 12) {
-					$(`#${right}`).html($(`#${j}`).html())
-					$(`#${j}`).html('')
+		let movement = 0;
+		// Combine all cells to the right
+		for(let i = 0; i < 4; i++) {
+			for(let j = 0; j < 16; j++) {
+				const curr = $(`#${j}`).html()
+				const next = $(`#${j - 1}`).html();
+				/*
+					0, 4, 8, 12 are the indexes of farthest left tiles 
+					Prevents tiles from going to the row above.
+					Combine if adjacent tiles are equal
+				*/
+				if(curr != '' && j != 0 && j != 4 && j != 8 && j != 12 && (curr == next)) {
+					let newValue = (2 * parseInt(curr));
+					$(`#${j}`).html(newValue);
+					$(`#${j - 1}`).html('');
+					movement = 1;
+				// update score here later
 				}
-			}
-		}
-		for(let k = 4; k >= 0; k--) { 
-			for(let l = k * 4 + 3; l >= (k * 4); l--) {
-				const a = l + 1
-				const b = parseInt($(`#${l}`).html())
-				const c = parseInt($(`#${a}`).html())
-				const d = $(`#${l}`).html()
-				const e = $(`#${a}`).html() 
-				if(d > 0 && e == '' && a != 0 && a != 4 && a != 8 && a != 12) {
-					$(`#${a}`).html(d)
-					$(`#${l}`).html('')
-				}
-				if(d == e) {
-					$(`#${a}`).html(b + c)
-					$(`#${l}`).html('')
-				}
-				for(let i = 0; i < 4; i++){
-					for(let j = 15; j > 0; j--) {
-						const right = j + 1
-						if($(`#${j}`).html() > 0 && $(`#${right}`).html() == '' && right != 4 && right != 8 && right != 12) {
-							$(`#${right}`).html($(`#${j}`).html())
-							$(`#${j}`).html('')
-						}
+				if(curr == '' && j != 0 && j != 4 && j != 8 && j != 12) {
+					let newValue = next
+					// If current tile has no value and adj tile, no combining
+					if(j != 0 && j != 4 && j != 8 && j != 12 && ((curr != '') || (next != ''))) {
+						movement = 1;
 					}
+					// Current and next tile both empty
+					$(`#${j}`).html(newValue);
+					$(`#${j - 1}`).html('');
 				}
 			}
 		}
+		// New tile if movement is made
+		if(movement) {
+			this.newTile();
+		}	
 	},
 	
 	up() {
-		for(let i = 0; i < 4; i++){
-			for(let j = 0; j < 15; j++) {
-				const up = j - 4
-				if($(`#${j}`).html() > 0 && $(`#${up}`).html() == '') {
-					$(`#${up}`).html($(`#${j}`).html())
-					$(`#${j}`).html('')
+		let movement = 0;
+		// Combine all cells to the up
+		for(let i = 0; i < 4; i++) {
+			for(let j = 0; j < 16; j++) {
+				const curr = $(`#${j}`).html()
+				const next = $(`#${j + 4}`).html();
+				// Combine if bottom under current tile is equal
+				if(curr != '' && (curr == next)) {
+					let newValue = (2 * parseInt(curr));
+					$(`#${j}`).html(newValue);
+					$(`#${j + 4}`).html('');
+					movement = 1;
+				// update score here later
 				}
-			}
-		}
-		for(let k = 0; k < 4; k++) { 
-			for(let l = k * 4; l <= (k * 4) + 3 ; l++) {
-				const a = l - 4
-				const b = parseInt($(`#${l}`).html())
-				const c = parseInt($(`#${a}`).html())
-				const d = $(`#${l}`).html() //2
-				const e = $(`#${a}`).html() //''
-				// if a and i are not on diff rows
-				if(d > 0 && e == '') {
-					$(`#${a}`).html(d)
-					$(`#${l}`).html('')
-				}
-				if(d == e) {
-					$(`#${a}`).html(b + c)
-					$(`#${l}`).html('')
-				}
-				for(let i = 0; i < 4; i++){
-					for(let j = 0; j < 15; j++) {
-						const up = j - 4
-						if($(`#${j}`).html() > 0 && $(`#${up}`).html() == '') {
-							$(`#${up}`).html($(`#${j}`).html())
-							$(`#${j}`).html('')
-						}
+				if(curr == '') {
+					let newValue = next
+					// If current tile has no value or tile under, no combining
+					if(((curr != '') || (next != ''))) {
+						movement = 1;
 					}
+					// Current and bottom tile both empty
+					$(`#${j}`).html(newValue);
+					$(`#${j + 4}`).html('');
 				}
 			}
 		}
-		
+		// New tile if movement is made
+		if(movement) {
+			this.newTile();
+		}	
 	},
 
 	down() {
-		for(let i = 0; i < 4; i++){
-			for(let j = 15; j > 0; j--) {
-				const down = j + 4
-				if($(`#${j}`).html() > 0 && $(`#${down}`).html() == '') {
-					$(`#${down}`).html($(`#${j}`).html())
-					$(`#${j}`).html('')
+		let movement = 0;
+		// Combine all cells to the down
+		for(let i = 0; i < 4; i++) {
+			for(let j = 0; j < 16; j++) {
+				const curr = $(`#${j}`).html()
+				const next = $(`#${j - 4}`).html();
+				// Combine if current tile  and tile above is equal
+				if(curr != '' && (curr == next)) {
+					let newValue = (2 * parseInt(curr));
+					$(`#${j}`).html(newValue);
+					$(`#${j - 4}`).html('');
+					movement = 1;
+				// update score here later
 				}
-			}
-		}
-		for(let k = 4; k >= 0; k--) { 
-			for(let l = k * 4 + 3; l >= (k * 4); l--) {
-				const a = l + 4
-				const b = parseInt($(`#${l}`).html())
-				const c = parseInt($(`#${a}`).html())
-				const d = $(`#${l}`).html() //2
-				const e = $(`#${a}`).html() //''
-				// if a and i are not on diff rows
-				if(d > 0 && e == '') {
-					$(`#${a}`).html(d)
-					$(`#${l}`).html('')
-				}
-				if(d == e) {
-					$(`#${a}`).html(b + c)
-					$(`#${l}`).html('')
-				}
-				for(let i = 0; i < 4; i++){
-					for(let j = 15; j > 0; j--) {
-						const down = j + 4
-						if($(`#${j}`).html() > 0 && $(`#${down}`).html() == '') {
-							$(`#${down}`).html($(`#${j}`).html())
-							$(`#${j}`).html('')
-						}
+				if(curr == '') {
+					let newValue = next
+					// If current tile no value and tile above, no combining
+					if(((curr != '') || (next != ''))) {
+						movement = 1;
 					}
+					// Current and next tile both empty
+					$(`#${j}`).html(newValue);
+					$(`#${j - 4}`).html('');
 				}
 			}
 		}
+		// New tile if movement is made
+		if(movement) {
+			this.newTile();
+		}	
 	},
 
 }
 
 game.newGame()
 
-$(document).keydown(function(e) {
+$(document).on('keydown', (e) => {
     switch(e.which) {
         case 37: // left
-        	game.left() 
-        	game.newTile()
+        	game.left()
         break;
 
         case 38: // up
         	game.up()
-        	game.newTile()
         break;
 
         case 39: // right
           	game.right()
-          	game.newTile()
         break;
 
         case 40: // down
           	game.down()
-          	game.newTile()
         break;
 
         default: return; // exit this handler for other keys
