@@ -1,11 +1,6 @@
 const game = {
 	randomTile: 0,
 	tileNumbers: [],
-	firstLeftMove: false,
-	firstRightMove: false,
-	firstUpMove: false,
-	firstDownMove: false,
-	movement: false,
 
 	newGame() {
 		this.randomTiles()
