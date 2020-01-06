@@ -3,6 +3,8 @@ const game = {
 	secondPlayerRandomTile: 0,
 	tileNumbers: [],
 	secondPlayerTileNumbers: [],
+	playerOneTotalScore: 0,
+	playerTwoTotalScore: 0,
 
 	newGame() {
 		this.randomTiles()
@@ -229,17 +231,16 @@ const game = {
 					$(`#${j}`).html(newValue);
 					$(`#${j + 1}`).html('');
 					movement = 1;
-				// update score here later
+					this.playerOneTotalScore += newValue;
+					this.firstPlayerScore()
 				}
-				if(curr == '' && j != 3 && j != 7 && j != 11 && j != 15) {
+				// If current tile has no value and adj tile, no combining
+				if(curr == '' && next != '' && j != 3 && j != 7 && j != 11 && j != 15) {
 					let newValue = next
-					// If current tile has no value and adj tile, no combining
-					if(j != 3 && j != 7 && j != 11 && j != 15 && ((curr != '') || (next != ''))) {
-						movement = 1;
-					}
-					// Current and next tile both empty
 					$(`#${j}`).html(newValue);
 					$(`#${j + 1}`).html('');
+					movement = 1
+					this.playerOneScore += newValue
 				}
 			}
 		}
@@ -266,17 +267,17 @@ const game = {
 					$(`#${j}`).html(newValue);
 					$(`#${j - 1}`).html('');
 					movement = 1;
-				// update score here later
+					this.playerOneTotalScore += newValue;
+					this.firstPlayerScore()
 				}
-				if(curr == '' && j != 0 && j != 4 && j != 8 && j != 12) {
+				// If current tile has no value and adj tile, no combining
+				// Current and next tile both empty
+				if(curr == '' && next != '' && j != 0 && j != 4 && j != 8 && j != 12) {
 					let newValue = next
-					// If current tile has no value and adj tile, no combining
-					if(j != 0 && j != 4 && j != 8 && j != 12 && ((curr != '') || (next != ''))) {
-						movement = 1;
-					}
-					// Current and next tile both empty
 					$(`#${j}`).html(newValue);
 					$(`#${j - 1}`).html('');
+					movement = 1;
+					this.playerOneScore += newValue
 				}
 			}
 		}
@@ -301,7 +302,8 @@ const game = {
 					$(`#${j}`).html(newValue);
 					$(`#${j + 4}`).html('');
 					movement = 1;
-				// update score here later
+					this.playerOneTotalScore += newValue;
+					this.firstPlayerScore()
 				}
 				if(curr == '' && j < 12) {
 					// If current tile has no value or tile under, no combining
@@ -334,7 +336,8 @@ const game = {
 					$(`#${j}`).html(newValue);
 					$(`#${j - 4}`).html('');
 					movement = 1;
-				// update score here later
+					this.playerOneTotalScore += newValue;
+					this.firstPlayerScore()
 				}
 				if(curr == '' && j > 3) {
 					let newValue = next
@@ -372,17 +375,15 @@ const game = {
 					$(`#second${j}`).html(newValue);
 					$(`#second${j + 1}`).html('');
 					movement = 1;
-				// update score here later
+					this.playerTwoTotalScore += newValue;
+					this.secondPlayerScore()
 				}
-				if(curr == '' && j != 3 && j != 7 && j != 11 && j != 15) {
+				// If current tile has no value and adj tile, no combining
+				if(curr == '' && next != '' && j != 3 && j != 7 && j != 11 && j != 15) {
 					let newValue = next
-					// If current tile has no value and adj tile, no combining
-					if(j != 3 && j != 7 && j != 11 && j != 15 && ((curr != '') || (next != ''))) {
-						movement = 1;
-					}
-					// Current and next tile both empty
 					$(`#second${j}`).html(newValue);
 					$(`#second${j + 1}`).html('');
+					movement = 1
 				}
 			}
 		}
@@ -410,17 +411,16 @@ const game = {
 					$(`#second${j}`).html(newValue);
 					$(`#second${j - 1}`).html('');
 					movement = 1;
-				// update score here later
+					this.playerTwoTotalScore += newValue;
+					this.secondPlayerScore()
 				}
-				if(curr == '' && j != 0 && j != 4 && j != 8 && j != 12) {
+				// If current tile has no value and adj tile, no combining
+				// Current and next tile both empty
+				if(curr == '' && next != '' && j != 0 && j != 4 && j != 8 && j != 12) {
 					let newValue = next
-					// If current tile has no value and adj tile, no combining
-					if(j != 0 && j != 4 && j != 8 && j != 12 && ((curr != '') || (next != ''))) {
-						movement = 1;
-					}
-					// Current and next tile both empty
 					$(`#second${j}`).html(newValue);
 					$(`#second${j - 1}`).html('');
+					movement = 1;
 				}
 			}
 		}
@@ -445,7 +445,8 @@ const game = {
 					$(`#second${j}`).html(newValue);
 					$(`#second${j + 4}`).html('');
 					movement = 1;
-				// update score here later
+					this.playerTwoTotalScore += newValue;
+					this.secondPlayerScore()
 				}
 				if(curr == '' && j < 12) {
 					// If current tile has no value or tile under, no combining
@@ -478,7 +479,8 @@ const game = {
 					$(`#second${j}`).html(newValue);
 					$(`#second${j - 4}`).html('');
 					movement = 1;
-				// update score here later
+					this.playerTwoTotalScore += newValue;
+					this.secondPlayerScore()
 				}
 				if(curr == '' && j > 3) {
 					let newValue = next
@@ -497,6 +499,13 @@ const game = {
 			this.secondPlayerNewTile();
 			this.secondPlayerTileColor(); 	
 		}
+	},
+	// Scores are based on the total value of the tiles combined
+	firstPlayerScore() {
+		$('#player-one-score').text('Score: ' + this.playerOneTotalScore)
+	},
+	secondPlayerScore() {
+		$('#player-two-score').text('Score: ' + this.playerTwoTotalScore)
 	},
 }
 
@@ -536,10 +545,32 @@ $(document).on('keydown', (e) => {
         	game.left()
         break;
 
+        case 90: // new-tile for testing
+        	game.newTile()
+        break;
+
         default: return; // exit this handler for other keys
     }
     e.preventDefault(); // prevent the default action (scroll / move caret)
 });
+
+$('#one-submit').on('click', (event) => {
+	event.preventDefault()
+	console.log($("#one-myText")[0].value);
+	const name = $("#one-myText")[0].value;
+  	$("#player-one-display-name").text('Player One: ' + name);
+	$('#one-submit').hide()
+	$('#one-myText').hide()
+})
+
+$('#two-submit').on('click', (event) => {
+	event.preventDefault()
+	console.log($("#two-myText")[0].value);
+	const name = $("#two-myText")[0].value;
+  	$("#player-two-display-name").text('Player Two: ' + name);
+	$('#two-submit').hide()
+	$('#two-myText').hide()
+})
 
 
 
