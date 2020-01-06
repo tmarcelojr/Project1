@@ -1,25 +1,51 @@
 body {
 	background-color: rgb(250, 248, 240);
-	text-align: center;
 }
 
 .tile {
-	height: 94px;
-	width: 94px;
+	height: 85px;
+	width: 125px;
 	font-weight: bold;
 	border-radius: 3px;
-	margin: 17px 0px 0px 17px;
+	margin: 17px -5px -5px 17px;
 	background-color: rgba(238, 228, 218, 0.35);
 	display: inline-block;
-	overflow: hidden;
-	font-size: 86px;
+	vertical-align: top;
+	font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+	text-align: center;
+	padding: 35px 0px 0px 0px;
+	transition: all 0.2s ease-in-out;
+}
 
+.secondGridTile {
+	height: 85px;
+	width: 125px;
+	font-weight: bold;
+	border-radius: 3px;
+	margin: 17px -5px -5px 17px;
+	background-color: rgba(238, 228, 218, 0.35);
+	display: inline-block;
+	vertical-align: top;
+	font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+	text-align: center;
+	padding: 35px 0px 0px 0px;
+	transition: all 0.2s ease-in-out;
 }
 
 #container {
-	height: 470px;
-	width: 470px;
+	height: 550px;
+	width: 570px;
 	border-radius: 6px;
 	background-color: #bbada0;
-	text-align: center;
+}
+
+#secondGridContainer {
+	height: 550px;
+	width: 570px;
+	border-radius: 6px;
+	background-color: #bbada0;
+}
+
+#gameBox {
+	display: flex;
 }
