@@ -5,6 +5,9 @@ const game = {
 	secondPlayerTileNumbers: [],
 	playerOneTotalScore: 0,
 	playerTwoTotalScore: 0,
+	playerOneName: false,
+	playerTwoName: false,
+
 
 	newGame() {
 		this.timer()
@@ -544,20 +547,29 @@ $(document).on('keydown', (e) => {
 
 $('#one-submit').on('click', (event) => {
 	event.preventDefault()
-	console.log($("#one-myText")[0].value);
+	// console.log($("#one-myText")[0].value);
 	const name = $("#one-myText")[0].value;
   	$("#player-one-display-name").text('Player One: ' + name);
 	$('#one-submit').hide()
 	$('#one-myText').hide()
+	game.playerOneName = true
 })
 
 $('#two-submit').on('click', (event) => {
 	event.preventDefault()
-	console.log($("#two-myText")[0].value);
+	// console.log($("#two-myText")[0].value);
 	const name = $("#two-myText")[0].value;
   	$("#player-two-display-name").text('Player Two: ' + name);
 	$('#two-submit').hide()
 	$('#two-myText').hide()
+	game.playerTwoName = true
+})
+
+$('#new-game').on('click', () => {
+	console.log($("#player-two-display-name").text());
+	if(game.playerOneName == true && game.playerTwoName == true) {
+		game.newGame()
+	}
 })
 
 
