@@ -49,6 +49,21 @@ h1 {
 	margin: 50px;
 }
 
+#restart {
+	height: 40px;
+	width: 170px;
+	border-radius: 3px;
+	padding: 0 20px;
+	background-color: rgb(140, 123, 105);
+	color: rgb(249, 246, 243);
+	font-size: 24px;
+	font-weight: bold;
+	font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;	
+	line-height: 42px;
+	margin: 50px;
+	display: none;
+}
+
 #timer {
 	/*border: 10px solid rgb(140, 123, 105);*/
 	border-radius: 10px;
@@ -176,8 +191,44 @@ h1 {
 	margin-top: 10px;
 }
 
+#first-overlay, #second-overlay {
+   position: fixed;
+   height: 100%; 
+   width: 100%;
+   top: 0;
+   right: 0;  
+   bottom: 0;
+   left: 0;
+   background: rgba(0,0,0,0.8);
+   display: none;
+}
 
+#first-popup, #second-popup {
+   max-width: 600px;
+   width: 80%;
+   max-height: 300px;
+   height: 80%; 
+   padding: 20px;
+   position: relative;
+   background: #fff;
+   margin: 20px auto;
+}
 
+#first-close {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   cursor: pointer;
+   color: #000;
+}
+
+#second-close {
+   position: absolute;
+   top: 10px;
+   right: 10px;
+   cursor: pointer;
+   color: #000;
+}
 
 
 

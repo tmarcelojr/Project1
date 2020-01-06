@@ -7,6 +7,7 @@ const game = {
 	playerTwoTotalScore: 0,
 	playerOneName: false,
 	playerTwoName: false,
+	timerId: 0,
 
 
 	newGame() {
@@ -19,7 +20,7 @@ const game = {
 		this.secondPlayerTileColor()
 	},
 	timer() {
-		let totalTime = '5:01'
+		let totalTime = '1:01'
 		let interval = setInterval(() => {
 			let timer = totalTime.split(':')
 			let minutes = parseInt(timer[0],10)
@@ -30,9 +31,16 @@ const game = {
 			seconds = seconds < 10 ? '0' + seconds : seconds;
 			$('#timer').html(minutes + ':' + seconds);
 			if(minutes < 0) clearInterval(interval);
-			if((seconds <= 0) && (minutes <= 0)) clearInterval(interval);
+			if((seconds <= 0) && (minutes <= 0)) {
+				clearInterval(interval);
+				this.gameOver()
+			}
 			totalTime = minutes + ':' + seconds;
-		}, 1000) 
+		}, 100) 
+		this.timerId = interval
+	},
+	clearInterval() {
+		clearInterval(this.timerId)
 	},
 	// Display two random tiles on board with values 2 or 4
 	firstTwoTiles() {
@@ -74,13 +82,13 @@ const game = {
 		// Arr to put all the tiles without a number
 		const emptyTiles = []
 		for(let i = 0; i < 16; i++) {
-			if($(`#${i}`).html() == '') {
+			if($(`#first${i}`).html() == '') {
 				emptyTiles.push(i)
 			}
 		}
 		const randomEmptyTile = emptyTiles[Math.floor(Math.random() * emptyTiles.length)]
 		this.randomTiles()
-		$(`#${randomEmptyTile}`).html(this.randomTile)
+		$(`#first${randomEmptyTile}`).html(this.randomTile)
 	},
 	secondPlayerNewTile() {
 		// Arr to put all the tiles without a number
@@ -220,6 +228,8 @@ const game = {
 					let newValue = (2 * parseInt(curr));
 					$(`#first${j}`).html(newValue);
 					$(`#first${j + 1}`).html('');
+					$(`#first${j + 1}`).css('background-color', 'rgb(237, 228, 219');
+
 					movement = 1;
 					this.playerOneTotalScore += newValue;
 					this.firstPlayerScore()
@@ -497,15 +507,20 @@ const game = {
 	secondPlayerScore() {
 		$('#player-two-score').text('Score: ' + this.playerTwoTotalScore)
 	},
+	gameOver() {
+		if(this.playerOneTotalScore > this.playerTwoTotalScore) {
+			$('#first-overlay').fadeIn(300);
+		}
+		if(this.playerTwoTotalScore > this.playerOneTotalScore) {
+			$('#second-overlay').fadeIn(300)
+		}
+	}
 }
-
-// game.newGame()
-
 
 $(document).on('keydown', (e) => {
     switch(e.which) {
         case 37: // left
-        	game.playerTwoLeft()
+        	setTimeout(game.playerTwoLeft(), 2000)
         break;
 
         case 38: // up
@@ -542,8 +557,9 @@ $(document).on('keydown', (e) => {
 
         default: return; // exit this handler for other keys
     }
-    e.preventDefault(); // prevent the default action (scroll / move caret)
-});
+    // e.preventDefault(); // prevent the default action (scroll / move caret)
+})
+
 
 $('#one-submit').on('click', (event) => {
 	event.preventDefault()
@@ -566,13 +582,32 @@ $('#two-submit').on('click', (event) => {
 })
 
 $('#new-game').on('click', () => {
-	console.log($("#player-two-display-name").text());
 	if(game.playerOneName == true && game.playerTwoName == true) {
 		game.newGame()
+		$('#new-game').hide()
+		$('#restart').show()
 	}
 })
 
+$('#restart').on('click', () => {
+	$('.tile').html('')
+	$('.secondGridTile').html('')
+	// console.log($('.tile'));
+	game.clearInterval()
+	game.playerOneTotalScore = 0
+	game.playerTwoTotalScore = 0
+	game.firstPlayerScore()
+	game.secondPlayerScore()
+	game.newGame()
+})
 
+$('#first-close').on('click', () => {
+	$('#first-overlay').fadeOut(300);
+});
+
+$('#second-close').on('click', () => {
+	$('#second-overlay').fadeOut(300);
+});
 
 
 
