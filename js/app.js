@@ -7,14 +7,29 @@ const game = {
 	playerTwoTotalScore: 0,
 
 	newGame() {
+		this.timer()
 		this.randomTiles()
 		this.secondPlayerRandomTiles()
-		this.createGrid()
-		this.createSecondGrid()
 		this.firstTwoTiles()
 		this.secondPlayerFirstTwoTiles()
 		this.tileColor()
 		this.secondPlayerTileColor()
+	},
+	timer() {
+		let totalTime = '5:01'
+		let interval = setInterval(() => {
+			let timer = totalTime.split(':')
+			let minutes = parseInt(timer[0],10)
+			let seconds = parseInt(timer[1],10)
+			seconds--;
+			minutes = seconds < 0 ? --minutes: minutes;
+			seconds = seconds < 0 ? 59: seconds;
+			seconds = seconds < 10 ? '0' + seconds : seconds;
+			$('#timer').html(minutes + ':' + seconds);
+			if(minutes < 0) clearInterval(interval);
+			if((seconds <= 0) && (minutes <= 0)) clearInterval(interval);
+			totalTime = minutes + ':' + seconds;
+		}, 1000) 
 	},
 	// Display two random tiles on board with values 2 or 4
 	firstTwoTiles() {
@@ -76,36 +91,62 @@ const game = {
 		this.secondPlayerRandomTiles()
 		$(`#second${randomEmptyTile}`).html(this.secondPlayerRandomTile)
 	},
-	// Creates the gameboard
-	createGrid() {
-		for(let i = 0; i < 4; i++) {
-			const $row = $('<div class="row"></div>')			
-			$('#container').append($row)
+	// CSS properties changed in JS since colors change when values change
+	tileColor() {
+		$('.tile').each((index) => {
+		const tile = $(`#first${index}`).html()
+		if(tile == '') {
+			$(`#first${index}`).css('background-color', 'rgb(203, 193, 182)')
 		}
-		for(let j = 0; j < 4; j++) {
-			$('<div/>',{
-			    class: 'tile'
-			}).appendTo('.row');
+		if(tile <= 4) {
+			$(`#first${index}`).css('color', 'rgb(118, 110, 102)')
+			$(`#first${index}`).css('font-size', '50px')
 		}
-		for(let k = 0; k < 16; k++) {
-			$($('.tile')[k]).attr('id', k)
-		}	
+		if(tile > 4) {
+			$(`#first${index}`).css('color', 'rgb(249, 246, 243)')
+		}
+		if(tile == 2) {
+			$(`#first${index}`).css('background-color', 'rgb(237, 228, 219)')
+		}
+		if(tile == 4) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 224, 203)')
+		}
+		if(tile == 8) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 179, 130)')
+		}
+		if(tile == 16) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 153, 109)')
+		}
+		if(tile == 32) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 131, 103)')
+		}
+		if(tile == 64) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 104, 72)')
+		}
+		if(tile >= 128) {
+			$(`#first${index}`).css('font-size', '45px')
+		}
+		if(tile == 128) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 208, 127)')
+		}
+		if(tile == 256) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 203, 116)')
+		}
+		if(tile == 512) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 199, 101)')
+		}
+		if(tile >= 1024) {
+			$(`#first${index}`).css('font-size', '40px')
+		}
+		if(tile == 1024) {
+			$(`#first${index}`).css('background-color', 'rgb(233, 200, 93)')
+		}
+		if(tile == 2048) {
+			$(`#first${index}`).css('background-color', 'rgb(230, 195, 80)')
+		}
+		})	
 	},
-	// Creates the second player gameboard
-	createSecondGrid() {
-		for(let i = 0; i < 4; i++) {
-			const $row = $('<div class="secondGridRow"></div>')
-			$('#secondGridContainer').append($row)
-		}
-		for(let j = 0; j < 4; j++) {
-			$('<div/>',{
-				class: 'secondGridTile'
-			}).appendTo('.secondGridRow');
-		}
-		for(let k = 0; k < 16; k++) {
-			$($('.secondGridTile')[k]).attr('id', `second${k}`)
-		}
-	},
+	// CSS properties changed in JS since colors change when values change
 	secondPlayerTileColor() {
 		$('.secondGridTile').each((index) => {
 			const tile = $(`#second${index}`).html()
@@ -160,67 +201,13 @@ const game = {
 			}
 		})	
 	},
-	tileColor() {
-		$('.tile').each((index) => {
-		const tile = $(`#${index}`).html()
-		if(tile == '') {
-			$(`#${index}`).css('background-color', 'rgb(203, 193, 182)')
-		}
-		if(tile <= 4) {
-			$(`#${index}`).css('color', 'rgb(118, 110, 102)')
-			$(`#${index}`).css('font-size', '50px')
-		}
-		if(tile > 4) {
-			$(`#${index}`).css('color', 'rgb(249, 246, 243)')
-		}
-		if(tile == 2) {
-			$(`#${index}`).css('background-color', 'rgb(237, 228, 219)')
-		}
-		if(tile == 4) {
-			$(`#${index}`).css('background-color', 'rgb(233, 224, 203)')
-		}
-		if(tile == 8) {
-			$(`#${index}`).css('background-color', 'rgb(233, 179, 130)')
-		}
-		if(tile == 16) {
-			$(`#${index}`).css('background-color', 'rgb(233, 153, 109)')
-		}
-		if(tile == 32) {
-			$(`#${index}`).css('background-color', 'rgb(233, 131, 103)')
-		}
-		if(tile == 64) {
-			$(`#${index}`).css('background-color', 'rgb(233, 104, 72)')
-		}
-		if(tile >= 128) {
-			$(`#${index}`).css('font-size', '45px')
-		}
-		if(tile == 128) {
-			$(`#${index}`).css('background-color', 'rgb(233, 208, 127)')
-		}
-		if(tile == 256) {
-			$(`#${index}`).css('background-color', 'rgb(233, 203, 116)')
-		}
-		if(tile == 512) {
-			$(`#${index}`).css('background-color', 'rgb(233, 199, 101)')
-		}
-		if(tile >= 1024) {
-			$(`#${index}`).css('font-size', '40px')
-		}
-		if(tile == 1024) {
-			$(`#${index}`).css('background-color', 'rgb(233, 200, 93)')
-		}
-		if(tile == 2048) {
-			$(`#${index}`).css('background-color', 'rgb(230, 195, 80)')
-		}
-		})	
-	},
 	left() {
 		let movement = 0;
 		// Combine all cells to the left
 		for(let i = 0; i < 4; i++) {
 			for(let j = 0; j < 16; j++) {
-				const curr = $(`#${j}`).html()
-				const next = $(`#${j + 1}`).html();
+				const curr = $(`#first${j}`).html()
+				const next = $(`#first${j + 1}`).html();
 				/*
 					3, 7, 11 , 15 are the indexes of farthest right tiles 
 					Prevents tiles from going to the row above.
@@ -228,8 +215,8 @@ const game = {
 				*/
 				if(curr > 0 && j != 3 && j != 7 && j != 11 && j != 15 && (curr == next)) {
 					let newValue = (2 * parseInt(curr));
-					$(`#${j}`).html(newValue);
-					$(`#${j + 1}`).html('');
+					$(`#first${j}`).html(newValue);
+					$(`#first${j + 1}`).html('');
 					movement = 1;
 					this.playerOneTotalScore += newValue;
 					this.firstPlayerScore()
@@ -237,8 +224,8 @@ const game = {
 				// If current tile has no value and adj tile, no combining
 				if(curr == '' && next != '' && j != 3 && j != 7 && j != 11 && j != 15) {
 					let newValue = next
-					$(`#${j}`).html(newValue);
-					$(`#${j + 1}`).html('');
+					$(`#first${j}`).html(newValue);
+					$(`#first${j + 1}`).html('');
 					movement = 1
 					this.playerOneScore += newValue
 				}
@@ -255,8 +242,8 @@ const game = {
 		// Combine all cells to the right
 		for(let i = 0; i < 4; i++) {
 			for(let j = 0; j < 16; j++) {
-				const curr = $(`#${j}`).html()
-				const next = $(`#${j - 1}`).html();
+				const curr = $(`#first${j}`).html()
+				const next = $(`#first${j - 1}`).html();
 				/*
 					0, 4, 8, 12 are the indexes of farthest left tiles 
 					Prevents tiles from going to the row above.
@@ -264,8 +251,8 @@ const game = {
 				*/
 				if(curr != '' && j != 0 && j != 4 && j != 8 && j != 12 && (curr == next)) {
 					let newValue = (2 * parseInt(curr));
-					$(`#${j}`).html(newValue);
-					$(`#${j - 1}`).html('');
+					$(`#first${j}`).html(newValue);
+					$(`#first${j - 1}`).html('');
 					movement = 1;
 					this.playerOneTotalScore += newValue;
 					this.firstPlayerScore()
@@ -274,8 +261,8 @@ const game = {
 				// Current and next tile both empty
 				if(curr == '' && next != '' && j != 0 && j != 4 && j != 8 && j != 12) {
 					let newValue = next
-					$(`#${j}`).html(newValue);
-					$(`#${j - 1}`).html('');
+					$(`#first${j}`).html(newValue);
+					$(`#first${j - 1}`).html('');
 					movement = 1;
 					this.playerOneScore += newValue
 				}
@@ -293,14 +280,14 @@ const game = {
 		// Combine all cells to the up
 		for(let i = 0; i < 4; i++) {
 			for(let j = 0; j < 16; j++) {
-				const curr = $(`#${j}`).html();
-				const next = $(`#${j + 4}`).html();
+				const curr = $(`#first${j}`).html();
+				const next = $(`#first${j + 4}`).html();
 				// Combine if bottom under current tile is equal
 				// Use j < 12 since 3rd row stops at 11. 4th row, no tiles underneath
 				if(curr != '' && curr == next && j < 12) {
 					let newValue = (2 * parseInt(curr));
-					$(`#${j}`).html(newValue);
-					$(`#${j + 4}`).html('');
+					$(`#first${j}`).html(newValue);
+					$(`#first${j + 4}`).html('');
 					movement = 1;
 					this.playerOneTotalScore += newValue;
 					this.firstPlayerScore()
@@ -310,8 +297,8 @@ const game = {
 					if(curr != '' || next != '' && j < 12) {
 						movement = 1;
 					}
-					$(`#${j}`).html(next);
-					$(`#${j + 4}`).html('');
+					$(`#first${j}`).html(next);
+					$(`#first${j + 4}`).html('');
 				}
 			}
 		}
@@ -327,14 +314,14 @@ const game = {
 		// Combine all cells to the down
 		for(let i = 0; i < 4; i++) {
 			for(let j = 0; j < 16; j++) {
-				const curr = $(`#${j}`).html()
-				const next = $(`#${j - 4}`).html();
+				const curr = $(`#first${j}`).html()
+				const next = $(`#first${j - 4}`).html();
 				// Combine if current tile  and tile above is equal
 				// j > 3 since no tiles above first row 
 				if(curr != '' && (curr == next) && j > 3) {
 					let newValue = (2 * parseInt(curr));
-					$(`#${j}`).html(newValue);
-					$(`#${j - 4}`).html('');
+					$(`#first${j}`).html(newValue);
+					$(`#first${j - 4}`).html('');
 					movement = 1;
 					this.playerOneTotalScore += newValue;
 					this.firstPlayerScore()
@@ -346,8 +333,8 @@ const game = {
 						movement = 1;
 					}
 					// Current and next tile both empty
-					$(`#${j}`).html(newValue);
-					$(`#${j - 4}`).html('');
+					$(`#first${j}`).html(newValue);
+					$(`#first${j - 4}`).html('');
 				}
 			}
 		}
@@ -509,7 +496,8 @@ const game = {
 	},
 }
 
-game.newGame()
+// game.newGame()
+
 
 $(document).on('keydown', (e) => {
     switch(e.which) {

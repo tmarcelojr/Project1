@@ -22,6 +22,19 @@ h1 {
 	margin: 0px 10px;
 }
 
+#timer {
+	font-size: 86px;
+	font-weight: bold;
+}
+
+#minutes {
+	display:inline-block;
+}
+
+#seconds {
+	display:inline-block;
+}
+
 #new-game {
 	height: 40px;
 	width: 170px;
@@ -37,7 +50,7 @@ h1 {
 }
 
 #timer {
-	border: 10px solid rgb(140, 123, 105);
+	/*border: 10px solid rgb(140, 123, 105);*/
 	border-radius: 10px;
 	width: 170px;
 	height: 80px;
@@ -47,7 +60,7 @@ h1 {
 #score {
 	width: 170px;
 	height: 80px;
-	border: 1px solid brown;
+	/*border: 1px solid brown;*/
 	display: inline-block;
 }
 
@@ -79,14 +92,14 @@ h1 {
 
 #container {
 	height: 550px;
-	width: 570px;
+	width: 620px;
 	border-radius: 6px;
 	background-color: #bbada0;
 }
 
 #secondGridContainer {
 	height: 550px;
-	width: 570px;
+	width: 620px;
 	border-radius: 6px;
 	background-color: #bbada0;
 }
@@ -131,6 +144,7 @@ h1 {
 	width: 130px;
 }
 
+
 #one-submit, #two-submit {
 	height: 30px;
 	width: 100px;
@@ -141,7 +155,7 @@ h1 {
 	display: inline-block;
 	border: none;
 	transition: all 0.4s ease 0s;
-	background: rgb(173, 229, 94);
+	background: rgb(140, 123, 105);
 	margin-top: 10px;
 }
 
@@ -153,3 +167,29 @@ h1 {
 	box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
 	transition: all 0.4s ease 0s;
 }
+
+#player-one-display-name {
+	margin-top: 10px;
+}
+
+#player-two-display-name {
+	margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

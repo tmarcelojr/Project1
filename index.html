@@ -8,34 +8,85 @@
 <body>
 	<div id='gameBox'>
 		<div id='container'>
+			<div class="row">
+				<div class="tile" id="first0"></div>
+				<div class="tile" id="first1"></div>
+				<div class="tile" id="first2"></div>
+				<div class="tile" id="first3"></div>
+			</div>
+			<div class="row">
+				<div class="tile" id="first4"></div>
+				<div class="tile" id="first5"></div>
+				<div class="tile" id="first6"></div>
+				<div class="tile" id="first7"></div>
+			</div>
+			<div class="row">
+				<div class="tile" id="first8"></div>
+				<div class="tile" id="first9"></div>
+				<div class="tile" id="first10"></div>
+				<div class="tile" id="first11"></div>
+			</div>
+			<div class="row">
+				<div class="tile" id="first12"></div>
+				<div class="tile" id="first13"></div>
+				<div class="tile" id="first14"></div>
+				<div class="tile" id="first15"></div>
+			</div>
 		</div>
 		<div id='middle'>
 			<h1>2048</h1>
 			<div id='text'> Combine tiles to get to <strong>2048 tile!</strong> or <strong>highest score</strong> when the time runs out wins the game.
 			</div>
 			<button id='new-game'>New Game</button>
-			<div id='timer'>Timer</div>
-			<div id='score'>Score</div>
+			<div id="timer"></div>
+			<p id="time">TIMER</p>
 		</div>
 		<div id='secondGridContainer'>
+			<div class="secondGridRow">
+				<div class="secondGridTile" id="second0"></div>
+				<div class="secondGridTile" id="second1"></div>
+				<div class="secondGridTile" id="second2"></div>
+				<div class="secondGridTile" id="second3"></div>
+			</div>
+			<div class="secondGridRow">
+				<div class="secondGridTile" id="second4"></div>
+				<div class="secondGridTile" id="second5"></div>
+				<div class="secondGridTile" id="second6"></div>
+				<div class="secondGridTile" id="second7"></div>
+			</div>
+			<div class="secondGridRow">
+				<div class="secondGridTile" id="second8"></div>
+				<div class="secondGridTile" id="second9"></div>
+				<div class="secondGridTile" id="second10"></div>
+				<div class="secondGridTile" id="second11"></div>
+			</div>
+			<div class="secondGridRow">
+				<div class="secondGridTile" id="second12"></div>
+				<div class="secondGridTile" id="second13"></div>
+				<div class="secondGridTile" id="second14"></div>
+				<div class="secondGridTile" id="second15"></div>
+			</div>
+		</div>
 		</div>
 	</div>
 	<div id='player-information'>
 		<div id="player-one"><strong>HOW TO PLAY:</strong> Player on the left will use <strong> W: &#8593; , A: &#8592;, S: &#8595;, D: &#8594; </strong> to move the tiles. All tiles with the same number will combine into one.
-			<p id="player-one-display-name">Player One:</p>
 			<form> 
+				<div id="player-one-display-name" style='font-weight:bold'>Player One:
 		       	<input type="text" id="one-myText" name="fname" placeholder=" ENTER NAME TO PLAY">
 		        <input id="one-submit" type="submit" value="submit"> 
+		    	</div>
 		    </form>
-		    <p id='player-one-score'>Score:</p>
+		    <p id='player-one-score' style='font-weight:bold'>Score:</p>
 		</div>
 		<div id="player-two"><strong>HOW TO PLAY:</strong> Player on the right will use <strong> arrow keys </strong> to move the tiles. All tiles with the same number will combine into one.
-			<p id="player-two-display-name">Player Two:</p>
 			<form> 
-		       	<input type="text" id="two-myText" name="fname" placeholder=" ENTER NAME TO PLAY">
+				<div id='player-two-display-name' style='font-weight:bold'>Player Two:
+		       	<input type='text' id='two-myText' name='fname' placeholder=' ENTER NAME TO PLAY'>
 		        <input id="two-submit" type="submit" value="submit"> 
+		    	</div>
 	    	</form>
-	    	<p id='player-two-score'>Score:</p>
+	    	<p id='player-two-score' style='font-weight:bold'>Score:</p>
 		</div>
 
 	</div>
