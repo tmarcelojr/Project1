@@ -37,12 +37,15 @@
 		</div>
 		<div id='middle'>
 			<h1>2048</h1>
-			<div id='text'> Combine tiles to get to <strong>2048 tile!</strong> or <strong>highest score</strong> when the time runs out wins the game.
+			<div id='text-introduction'> Combine tiles to get to <strong>2048 tile!</strong> or <strong>highest score</strong> when the time runs out wins the game.
+			</div>
+			<div id='instructions'>
+				<strong>HOW TO PLAY:</strong> Player One on the left will use <strong> W: &#8593; , A: &#8592;, S: &#8595;, D: &#8594; </strong> to move the tiles. Player Two on the right will use <strong> arrow keys </strong>. All tiles with the same number will combine into one.
 			</div>
 			<button id='new-game'>New Game</button>
 			<button id='restart'>Restart</button>
 			<div id="timer"></div>
-			<p id="time">TIMER</p>
+			<button class="button" id='on-off'>TIMER OFF</button>
 			<div id="first-overlay">
         		<div id="first-popup">
 	            	<button id="first-close">X</button>
@@ -87,7 +90,7 @@
 		</div>
 	</div>
 	<div id='player-information'>
-		<div id="player-one"><strong>HOW TO PLAY:</strong> Player on the left will use <strong> W: &#8593; , A: &#8592;, S: &#8595;, D: &#8594; </strong> to move the tiles. All tiles with the same number will combine into one.
+		<div id="player-one">
 			<form> 
 				<div id="player-one-display-name" style='font-weight:bold'>Player One:
 		       	<input type="text" id="one-myText" name="fname" placeholder=" ENTER NAME TO PLAY">
@@ -95,8 +98,9 @@
 		    	</div>
 		    </form>
 		    <p id='player-one-score' style='font-weight:bold'>Score:</p>
+		    <p id="player-one-moves" style='font-weight:bold'>Moves:</p>
 		</div>
-		<div id="player-two"><strong>HOW TO PLAY:</strong> Player on the right will use <strong> arrow keys </strong> to move the tiles. All tiles with the same number will combine into one.
+		<div id="player-two">
 			<form> 
 				<div id='player-two-display-name' style='font-weight:bold'>Player Two:
 		       	<input type='text' id='two-myText' name='fname' placeholder=' ENTER NAME TO PLAY'>
@@ -104,6 +108,7 @@
 		    	</div>
 	    	</form>
 	    	<p id='player-two-score' style='font-weight:bold'>Score:</p>
+	    	<p id="player-two-moves" style='font-weight:bold'>Moves:</p>
 		</div>
 
 	</div>

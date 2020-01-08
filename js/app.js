@@ -8,7 +8,17 @@ const game = {
 	playerOneName: false,
 	playerTwoName: false,
 	timerId: 0,
-
+	timerOff: false,
+	playerOneTotalMoves:0,
+	playerTwoTotalMoves:0,
+	playerOneMoveLeft: true,
+	playerOneMoveUp: true,
+	playerOneMoveDown: true,
+	playerOneMoveRight: true,
+	playerTwoMoveLeft: true,
+	playerTwoMoveUp: true,
+	playerTwoMoveDown: true,
+	playerTwoMoveRight: true,
 
 	newGame() {
 		this.timer()
@@ -20,24 +30,26 @@ const game = {
 		this.secondPlayerTileColor()
 	},
 	timer() {
-		let totalTime = '1:01'
-		let interval = setInterval(() => {
-			let timer = totalTime.split(':')
-			let minutes = parseInt(timer[0],10)
-			let seconds = parseInt(timer[1],10)
-			seconds--;
-			minutes = seconds < 0 ? --minutes: minutes;
-			seconds = seconds < 0 ? 59: seconds;
-			seconds = seconds < 10 ? '0' + seconds : seconds;
-			$('#timer').html(minutes + ':' + seconds);
-			if(minutes < 0) clearInterval(interval);
-			if((seconds <= 0) && (minutes <= 0)) {
-				clearInterval(interval);
-				this.gameOver()
-			}
-			totalTime = minutes + ':' + seconds;
-		}, 100) 
-		this.timerId = interval
+		if(this.timerOff == true) {
+			let totalTime = '5:01'
+			let interval = setInterval(() => {
+				let timer = totalTime.split(':')
+				let minutes = parseInt(timer[0],10)
+				let seconds = parseInt(timer[1],10)
+				seconds--;
+				minutes = seconds < 0 ? --minutes: minutes;
+				seconds = seconds < 0 ? 59: seconds;
+				seconds = seconds < 10 ? '0' + seconds : seconds;
+				$('#timer').html(minutes + ':' + seconds);
+				if(minutes < 0) clearInterval(interval);
+				if((seconds <= 0) && (minutes <= 0)) {
+					clearInterval(interval);
+					this.gameOver()
+				}
+				totalTime = minutes + ':' + seconds;
+			}, 1000) 
+			this.timerId = interval
+		}
 	},
 	clearInterval() {
 		clearInterval(this.timerId)
@@ -89,6 +101,7 @@ const game = {
 		const randomEmptyTile = emptyTiles[Math.floor(Math.random() * emptyTiles.length)]
 		this.randomTiles()
 		$(`#first${randomEmptyTile}`).html(this.randomTile)
+		console.log(emptyTiles);
 	},
 	secondPlayerNewTile() {
 		// Arr to put all the tiles without a number
@@ -152,8 +165,9 @@ const game = {
 		if(tile == 1024) {
 			$(`#first${index}`).css('background-color', 'rgb(233, 200, 93)')
 		}
-		if(tile == 2048) {
+		if(tile >= 2048) {
 			$(`#first${index}`).css('background-color', 'rgb(230, 195, 80)')
+			this.gameOver()
 		}
 		})	
 	},
@@ -207,12 +221,13 @@ const game = {
 			if(tile == 1024) {
 				$(`#second${index}`).css('background-color', 'rgb(233, 200, 93)')
 			}
-			if(tile == 2048) {
+			if(tile >= 2048) {
 				$(`#second${index}`).css('background-color', 'rgb(230, 195, 80)')
+				this.gameOver()
 			}
 		})	
 	},
-	left() {
+	playerOneLeft() {
 		let movement = 0;
 		// Combine all cells to the left
 		for(let i = 0; i < 4; i++) {
@@ -228,11 +243,8 @@ const game = {
 					let newValue = (2 * parseInt(curr));
 					$(`#first${j}`).html(newValue);
 					$(`#first${j + 1}`).html('');
-					$(`#first${j + 1}`).css('background-color', 'rgb(237, 228, 219');
-
 					movement = 1;
 					this.playerOneTotalScore += newValue;
-					this.firstPlayerScore()
 				}
 				// If current tile has no value and adj tile, no combining
 				if(curr == '' && next != '' && j != 3 && j != 7 && j != 11 && j != 15) {
@@ -240,17 +252,24 @@ const game = {
 					$(`#first${j}`).html(newValue);
 					$(`#first${j + 1}`).html('');
 					movement = 1
-					this.playerOneScore += newValue
 				}
 			}
 		}
 		// New tile and update tile colors if movement is made
 		if(movement) {
 			this.newTile();
-			this.tileColor(); 
+			this.tileColor();
+			this.playerOneTotalMoves++
+			this.firstPlayerScore()
+		}
+		else{
+			movement = 0
+			this.playerOneMoveLeft = false
+			this.playersCanMove()
 		}
 	},
-	right() {
+
+	playerOneRight() {
 		let movement = 0;
 		// Combine all cells to the right
 		for(let i = 0; i < 4; i++) {
@@ -268,7 +287,6 @@ const game = {
 					$(`#first${j - 1}`).html('');
 					movement = 1;
 					this.playerOneTotalScore += newValue;
-					this.firstPlayerScore()
 				}
 				// If current tile has no value and adj tile, no combining
 				// Current and next tile both empty
@@ -277,18 +295,24 @@ const game = {
 					$(`#first${j}`).html(newValue);
 					$(`#first${j - 1}`).html('');
 					movement = 1;
-					this.playerOneScore += newValue
 				}
 			}
 		}
 		// New tile and update tile colors if movement is made
 		if(movement) {
 			this.newTile();
-			this.tileColor()
+			this.tileColor();
+			this.playerOneTotalMoves++
+			this.firstPlayerScore()
+		}
+		else{
+			movement = 0
+			this.playerOneMoveRight = false
+			this.playersCanMove()
 		}
 	},
 	
-	up() {
+	playerOneUp() {
 		let movement = 0;
 		// Combine all cells to the up
 		for(let i = 0; i < 4; i++) {
@@ -303,7 +327,6 @@ const game = {
 					$(`#first${j + 4}`).html('');
 					movement = 1;
 					this.playerOneTotalScore += newValue;
-					this.firstPlayerScore()
 				}
 				if(curr == '' && j < 12) {
 					// If current tile has no value or tile under, no combining
@@ -318,11 +341,18 @@ const game = {
 		// New tile and update tile colors if movement is made
 		if(movement) {
 			this.newTile();
-			this.tileColor()	
+			this.tileColor();
+			this.playerOneTotalMoves++
+			this.firstPlayerScore()	
+		}
+		else{
+			movement = 0
+			this.playerOneMoveUp = false
+			this.playersCanMove()
 		}
 	},
 
-	down() {
+	playerOneDown() {
 		let movement = 0;
 		// Combine all cells to the down
 		for(let i = 0; i < 4; i++) {
@@ -337,7 +367,7 @@ const game = {
 					$(`#first${j - 4}`).html('');
 					movement = 1;
 					this.playerOneTotalScore += newValue;
-					this.firstPlayerScore()
+					
 				}
 				if(curr == '' && j > 3) {
 					let newValue = next
@@ -354,10 +384,16 @@ const game = {
 		// New tile and update tile colors if movement is made 
 		if(movement) {
 			this.newTile();
-			this.tileColor()	
+			this.tileColor();
+			this.playerOneTotalMoves++
+			this.firstPlayerScore()
+		}
+		else{
+			movement = 0
+			this.playerOneMoveDown = false
+			this.playersCanMove()
 		}
 	},
-
 	playerTwoLeft() {
 		let movement = 0;
 		// Combine all cells to the left
@@ -374,9 +410,9 @@ const game = {
 					let newValue = (2 * parseInt(curr));
 					$(`#second${j}`).html(newValue);
 					$(`#second${j + 1}`).html('');
+					$(`#second${j + 1}`).css('background-color', 'rgb(237, 228, 219');
 					movement = 1;
 					this.playerTwoTotalScore += newValue;
-					this.secondPlayerScore()
 				}
 				// If current tile has no value and adj tile, no combining
 				if(curr == '' && next != '' && j != 3 && j != 7 && j != 11 && j != 15) {
@@ -384,16 +420,23 @@ const game = {
 					$(`#second${j}`).html(newValue);
 					$(`#second${j + 1}`).html('');
 					movement = 1
+					this.playerTwoScore += newValue
 				}
 			}
 		}
 		// New tile and update tile colors if movement is made
 		if(movement) {
 			this.secondPlayerNewTile();
-			this.secondPlayerTileColor(); 
+			this.secondPlayerTileColor();
+			this.playerTwoTotalMoves++;
+			this.secondPlayerScore()
+		}
+		else{
+			movement = 0
+			this.playerTwoMoveLeft = false
+			this.playersCanMove()
 		}
 	},
-
 	playerTwoRight() {
 		let movement = 0;
 		// Combine all cells to the right
@@ -412,7 +455,6 @@ const game = {
 					$(`#second${j - 1}`).html('');
 					movement = 1;
 					this.playerTwoTotalScore += newValue;
-					this.secondPlayerScore()
 				}
 				// If current tile has no value and adj tile, no combining
 				// Current and next tile both empty
@@ -421,13 +463,21 @@ const game = {
 					$(`#second${j}`).html(newValue);
 					$(`#second${j - 1}`).html('');
 					movement = 1;
+					this.playerTwoScore += newValue
 				}
 			}
 		}
 		// New tile and update tile colors if movement is made
 		if(movement) {
 			this.secondPlayerNewTile();
-			this.secondPlayerTileColor(); 
+			this.secondPlayerTileColor()
+			this.playerTwoTotalMoves++;
+			this.secondPlayerScore()
+		}
+		else{
+			movement = 0
+			this.playerTwoMoveRight = false
+			this.playersCanMove()
 		}
 	},
 	
@@ -446,7 +496,6 @@ const game = {
 					$(`#second${j + 4}`).html('');
 					movement = 1;
 					this.playerTwoTotalScore += newValue;
-					this.secondPlayerScore()
 				}
 				if(curr == '' && j < 12) {
 					// If current tile has no value or tile under, no combining
@@ -461,7 +510,14 @@ const game = {
 		// New tile and update tile colors if movement is made
 		if(movement) {
 			this.secondPlayerNewTile();
-			this.secondPlayerTileColor(); 	
+			this.secondPlayerTileColor();
+			this.playerTwoTotalMoves++;
+			this.secondPlayerScore()	
+		}
+		else{
+			movement = 0
+			this.playerTwoMoveUp = false
+			this.playersCanMove()
 		}
 	},
 
@@ -480,13 +536,13 @@ const game = {
 					$(`#second${j - 4}`).html('');
 					movement = 1;
 					this.playerTwoTotalScore += newValue;
-					this.secondPlayerScore()
 				}
 				if(curr == '' && j > 3) {
 					let newValue = next
 					// If current tile no value and tile above, no combining
 					if(curr != '' || next != '' && j > 3) {
 						movement = 1;
+						this.playersTwoTotalMoves++
 					}
 					// Current and next tile both empty
 					$(`#second${j}`).html(newValue);
@@ -497,15 +553,39 @@ const game = {
 		// New tile and update tile colors if movement is made 
 		if(movement) {
 			this.secondPlayerNewTile();
-			this.secondPlayerTileColor(); 	
+			this.secondPlayerTileColor();
+			this.playerTwoTotalMoves++;
+			this.secondPlayerScore()	
+		}
+		else{
+			movement = 0
+			this.playerTwoMoveDown = false
+			this.playersCanMove()
 		}
 	},
 	// Scores are based on the total value of the tiles combined
 	firstPlayerScore() {
 		$('#player-one-score').text('Score: ' + this.playerOneTotalScore)
+		$('#player-one-moves').text('Moves: ' + this.playerOneTotalMoves)
 	},
 	secondPlayerScore() {
 		$('#player-two-score').text('Score: ' + this.playerTwoTotalScore)
+		$('#player-two-moves').text('Moves: ' + this.playerTwoTotalMoves)
+	},
+	// Checks to see if both players can still move
+	playersCanMove() {
+		if(
+			this.playerOneMoveUp == false && 
+			this.playerOneMoveDown == false && 
+			this.playerOneMoveLeft == false && 
+			this.playerOneMoveRight == false &&
+			this.playerTwoMoveUp == false && 
+			this.playerTwoMoveDown == false && 
+			this.playerTwoMoveLeft == false && 
+			this.playerTwoMoveRight == false 
+		){
+			this.gameOver()
+		}
 	},
 	gameOver() {
 		if(this.playerOneTotalScore > this.playerTwoTotalScore) {
@@ -519,8 +599,24 @@ const game = {
 
 $(document).on('keydown', (e) => {
     switch(e.which) {
+    	case 87: // w - up
+        	game.playerOneUp()
+        break; 
+
+        case 68: // d - right
+        	game.playerOneRight()
+        break; 
+
+        case 83: // s - down
+        	game.playerOneDown()
+        break; 
+
+        case 65: // a - left
+        	game.playerOneLeft()
+        break;
+
         case 37: // left
-        	setTimeout(game.playerTwoLeft(), 2000)
+        	game.playerTwoLeft()
         break;
 
         case 38: // up
@@ -535,26 +631,6 @@ $(document).on('keydown', (e) => {
           	game.playerTwoDown()
         break;
 
-        case 87: // w - up
-        	game.up()
-        break; 
-
-        case 68: // d - right
-        	game.right()
-        break; 
-
-        case 83: // s - down
-        	game.down()
-        break; 
-
-        case 65: // a - left
-        	game.left()
-        break;
-
-        case 90: // new-tile for testing
-        	game.newTile()
-        break;
-
         default: return; // exit this handler for other keys
     }
     // e.preventDefault(); // prevent the default action (scroll / move caret)
@@ -564,21 +640,34 @@ $(document).on('keydown', (e) => {
 $('#one-submit').on('click', (event) => {
 	event.preventDefault()
 	// console.log($("#one-myText")[0].value);
-	const name = $("#one-myText")[0].value;
-  	$("#player-one-display-name").text('Player One: ' + name);
-	$('#one-submit').hide()
-	$('#one-myText').hide()
-	game.playerOneName = true
+	// console.log($('#one-myText').val());
+	if($("#one-myText").val() < 1) {
+		$('#one-myText').css('background-color', 'rgba(255, 0, 0, 0.5')
+		setTimeout("$('#one-myText').css('background-color', 'white');", 200);
+	}
+	else{
+		const name = ($("#one-myText").val()).toUpperCase();
+	  	$("#player-one-display-name").text('Player One: ' + name);
+		$('#one-submit').hide()
+		$('#one-myText').hide()
+		game.playerOneName = true
+	}
 })
 
 $('#two-submit').on('click', (event) => {
 	event.preventDefault()
-	// console.log($("#two-myText")[0].value);
-	const name = $("#two-myText")[0].value;
-  	$("#player-two-display-name").text('Player Two: ' + name);
-	$('#two-submit').hide()
-	$('#two-myText').hide()
-	game.playerTwoName = true
+	if($("#two-myText").val() < 1) {
+		$('#two-myText').css('background-color', 'rgba(255, 0, 0, 0.5')
+		setTimeout("$('#two-myText').css('background-color', 'white');", 200);
+	}
+	else{
+		// console.log($("#two-myText")[0].value);
+		const name = ($("#two-myText").val()).toUpperCase();
+	  	$("#player-two-display-name").text('Player Two: ' + name);
+		$('#two-submit').hide()
+		$('#two-myText').hide()
+		game.playerTwoName = true
+	}
 })
 
 $('#new-game').on('click', () => {
@@ -586,6 +675,13 @@ $('#new-game').on('click', () => {
 		game.newGame()
 		$('#new-game').hide()
 		$('#restart').show()
+		$('#on-off').show()
+	}
+	else{
+		$('#one-myText').css('background-color', 'rgba(255, 0, 0, 0.5')
+		$('#two-myText').css('background-color', 'rgba(255, 0, 0, 0.5')
+		setTimeout("$('#one-myText').css('background-color', 'white');", 200);
+		setTimeout("$('#two-myText').css('background-color', 'white');", 200);
 	}
 })
 
@@ -596,6 +692,8 @@ $('#restart').on('click', () => {
 	game.clearInterval()
 	game.playerOneTotalScore = 0
 	game.playerTwoTotalScore = 0
+	game.playerOneTotalMoves = 0
+	game.playerTwoTotalMoves = 0
 	game.firstPlayerScore()
 	game.secondPlayerScore()
 	game.newGame()
@@ -608,6 +706,24 @@ $('#first-close').on('click', () => {
 $('#second-close').on('click', () => {
 	$('#second-overlay').fadeOut(300);
 });
+
+$('#on-off').on('click', () => {
+	if($('#on-off').html() == 'TIMER ON') {
+		$('#on-off').html('TIMER OFF')
+		$('#on-off').css('background-color', '#434343')
+		game.timerOff = false
+		game.clearInterval()
+		$('#timer').html('')
+		// console.log('timer is off', game.timerOff);
+	}
+	else {
+		$('#on-off').html('TIMER ON')
+		$('#on-off').css('background-color', 'rgb(140, 123, 105)')
+		game.timerOff = true
+		game.timer()
+		// console.log('timer is on', game.timerOff);
+	}
+})
 
 
 

@@ -4,6 +4,7 @@ body {
 	color: rgb(118, 110, 102);
 	text-align: center;
 	width: 1500px;
+	margin: 20px 0px 0px 10px;
 }
 
 h1 {
@@ -12,70 +13,55 @@ h1 {
 	padding: 0 50px;
 }
 
-#text {
-	font-size: 18px;
-}
-
 #middle {
 	text-align: center;
 	width: 350px;
 	margin: 0px 10px;
+	font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+	font-size: 18px;
+}
+
+#instructions {
+	padding: 20px;
 }
 
 #timer {
-	font-size: 86px;
-	font-weight: bold;
-}
-
-#minutes {
-	display:inline-block;
-}
-
-#seconds {
-	display:inline-block;
-}
-
-#new-game {
-	height: 40px;
-	width: 170px;
-	border-radius: 3px;
-	padding: 0 20px;
-	background-color: rgb(140, 123, 105);
-	color: rgb(249, 246, 243);
-	font-size: 24px;
-	font-weight: bold;
-	font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;	
-	line-height: 42px;
-	margin: 50px;
-}
-
-#restart {
-	height: 40px;
-	width: 170px;
-	border-radius: 3px;
-	padding: 0 20px;
-	background-color: rgb(140, 123, 105);
-	color: rgb(249, 246, 243);
-	font-size: 24px;
-	font-weight: bold;
-	font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;	
-	line-height: 42px;
-	margin: 50px;
-	display: none;
-}
-
-#timer {
-	/*border: 10px solid rgb(140, 123, 105);*/
 	border-radius: 10px;
 	width: 170px;
 	height: 80px;
+	font-size: 86px;
+	font-weight: bold;
+	right: 50px;
+	margin-left: 80px;
+}
+
+#on-off {
+	background-color: #434343;
+	width: 170px;
+	border-radius: 3px;
+	margin-top: 20px;
+	display: none;
+}
+
+#restart {
+	cursor: pointer;
+	height: 30px;
+	width: 100px;
+	color: #fff !important;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-radius: 5px;
 	display: inline-block;
+	display: none;
+	border: none;
+	transition: all 0.4s ease 0s;
+	background: rgb(140, 123, 105);
+	margin-top: 10px;
 }
 
 #score {
 	width: 170px;
 	height: 80px;
-	/*border: 1px solid brown;*/
 	display: inline-block;
 }
 
@@ -152,6 +138,14 @@ h1 {
 	float: right;
 }
 
+#player-one-score, #player-two-score {
+	margin-top: 0px;
+}
+
+#player-one-moves, #player-two-moves {
+	margin-top: -20px;
+}
+
 #one-myText, #two-myText {
 	height:25px;
 	border-radius: 5px;
@@ -160,9 +154,10 @@ h1 {
 }
 
 
-#one-submit, #two-submit {
+#one-submit, #two-submit, #new-game {
+	cursor: pointer;
 	height: 30px;
-	width: 100px;
+	width: 150px;
 	color: #fff !important;
 	text-transform: uppercase;
 	text-decoration: none;
@@ -174,21 +169,13 @@ h1 {
 	margin-top: 10px;
 }
 
-#one-submit:hover, #two-submit:hover {
+#one-submit:hover, #two-submit:hover, #new-game:hover, #restart:hover {
 	background: #434343;
 	letter-spacing: 1px;
 	-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 	-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
 	box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
 	transition: all 0.4s ease 0s;
-}
-
-#player-one-display-name {
-	margin-top: 10px;
-}
-
-#player-two-display-name {
-	margin-top: 10px;
 }
 
 #first-overlay, #second-overlay {
@@ -210,7 +197,8 @@ h1 {
    height: 80%; 
    padding: 20px;
    position: relative;
-   background: #fff;
+   background-color: rgba(238, 228, 218, 0.35);
+   color: rgb(249, 246, 243);
    margin: 20px auto;
 }
 
@@ -230,9 +218,27 @@ h1 {
    color: #000;
 }
 
+.button {
+	height: 30px;
+	width: 150px;
+	color: #fff !important;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-radius: 5px;
+	display: inline-block;
+	border: none;
+	transition: all 0.4s ease 0s;
+}
 
-
-
+.button:hover {
+	cursor: pointer;
+	background-color: #434343;
+	letter-spacing: 1px;
+	-webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+	-moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+	box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+	transition: all 0.4s ease 0s;
+}
 
 
 
