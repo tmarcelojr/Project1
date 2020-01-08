@@ -11,6 +11,12 @@ h1 {
 	margin-top: 10px;
 }
 
+#subtitle {
+	font-size: 14px;
+	margin-top: -50px;
+	margin-bottom: 40px;
+}
+
 #middle {
 	text-align: center;
 	width: 350px;
