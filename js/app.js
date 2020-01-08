@@ -101,7 +101,7 @@ const game = {
 		const randomEmptyTile = emptyTiles[Math.floor(Math.random() * emptyTiles.length)]
 		this.randomTiles()
 		$(`#first${randomEmptyTile}`).html(this.randomTile)
-		console.log(emptyTiles);
+		// console.log(emptyTiles);
 	},
 	secondPlayerNewTile() {
 		// Arr to put all the tiles without a number
@@ -244,6 +244,7 @@ const game = {
 					$(`#first${j}`).html(newValue);
 					$(`#first${j + 1}`).html('');
 					movement = 1;
+					this.tileColor()
 					this.playerOneTotalScore += newValue;
 				}
 				// If current tile has no value and adj tile, no combining
@@ -251,6 +252,7 @@ const game = {
 					let newValue = next
 					$(`#first${j}`).html(newValue);
 					$(`#first${j + 1}`).html('');
+					this.tileColor()
 					movement = 1
 				}
 			}
@@ -410,7 +412,6 @@ const game = {
 					let newValue = (2 * parseInt(curr));
 					$(`#second${j}`).html(newValue);
 					$(`#second${j + 1}`).html('');
-					$(`#second${j + 1}`).css('background-color', 'rgb(237, 228, 219');
 					movement = 1;
 					this.playerTwoTotalScore += newValue;
 				}
@@ -590,45 +591,72 @@ const game = {
 	gameOver() {
 		if(this.playerOneTotalScore > this.playerTwoTotalScore) {
 			$('#first-overlay').fadeIn(300);
+			game.clearInterval()
 		}
 		if(this.playerTwoTotalScore > this.playerOneTotalScore) {
 			$('#second-overlay').fadeIn(300)
+			game.clearInterval()
 		}
 	}
 }
 
 $(document).on('keydown', (e) => {
+	let timeoutId = 0
     switch(e.which) {
     	case 87: // w - up
-        	game.playerOneUp()
+        	clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+	        	game.playerOneUp()
+			}, 100)
         break; 
 
         case 68: // d - right
-        	game.playerOneRight()
+        	clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+	        	game.playerOneRight()
+			}, 100)
         break; 
 
         case 83: // s - down
-        	game.playerOneDown()
+        	clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+	        	game.playerOneDown()
+			}, 100)
         break; 
 
         case 65: // a - left
-        	game.playerOneLeft()
+        	clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+	        	game.playerOneLeft()
+			}, 100)    	
         break;
 
         case 37: // left
-        	game.playerTwoLeft()
+    		clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+	        	game.playerTwoLeft()
+			}, 100)
         break;
 
         case 38: // up
-        	game.playerTwoUp()
+        	clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+	        	game.playerTwoUp()
+			}, 100)
         break;
 
         case 39: // right
-          	game.playerTwoRight()
+          	clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+	        	game.playerTwoRight()
+			}, 100)
         break;
 
         case 40: // down
-          	game.playerTwoDown()
+          	clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => {
+	        	game.playerTwoDown()
+			}, 100)
         break;
 
         default: return; // exit this handler for other keys

@@ -4,13 +4,11 @@ body {
 	color: rgb(118, 110, 102);
 	text-align: center;
 	width: 1500px;
-	margin: 20px 0px 0px 10px;
 }
 
 h1 {
 	font-size: 72px;
 	margin-top: 10px;
-	padding: 0 50px;
 }
 
 #middle {
@@ -21,8 +19,12 @@ h1 {
 	font-size: 18px;
 }
 
+#text-introduction {
+	margin-top: -20px;
+}
+
 #instructions {
-	padding: 20px;
+	margin-top: -10px;
 }
 
 #timer {
@@ -96,6 +98,7 @@ h1 {
 	width: 620px;
 	border-radius: 6px;
 	background-color: #bbada0;
+	margin-top: -100px;
 }
 
 #secondGridContainer {
@@ -103,6 +106,7 @@ h1 {
 	width: 620px;
 	border-radius: 6px;
 	background-color: #bbada0;
+	margin-top: -100px;
 }
 
 .row {
@@ -153,6 +157,15 @@ h1 {
 	width: 130px;
 }
 
+footer {
+	display: inline-block;
+	font-size: 18px;
+}
+
+a {color: rgb(118, 110, 102);} 
+a:visited {color: rgb(118, 110, 102);}
+a:hover {color: rgb(118, 110, 102);} 
+a:active {color: rgb(118, 110, 102);}
 
 #one-submit, #two-submit, #new-game {
 	cursor: pointer;

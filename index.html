@@ -3,11 +3,11 @@
 <head>
 	<title>2048</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/gh/vast-engineering/jquery-popup-overlay@2/jquery.popupoverlay.min.js">
- 	</script>
+	<script src="https://cdn.jsdelivr.net/gh/vast-engineering/jquery-popup-overlay@2/jquery.popupoverlay.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
+	<h1>2048</h1>
 	<div id='gameBox'>
 		<div id='container'>
 			<div class="row">
@@ -36,11 +36,12 @@
 			</div>
 		</div>
 		<div id='middle'>
-			<h1>2048</h1>
-			<div id='text-introduction'> Combine tiles to get to <strong>2048 tile!</strong> or <strong>highest score</strong> when the time runs out wins the game.
+			<div id='text-introduction'> Combine tiles to get to <strong>2048 tile!</strong> to win. If timer is <strong>ON</strong> and finishes, player with the <strong>highest score</strong> wins the game. If both players can't move, <strong>game over!</strong>
 			</div>
 			<div id='instructions'>
-				<strong>HOW TO PLAY:</strong> Player One on the left will use <strong> W: &#8593; , A: &#8592;, S: &#8595;, D: &#8594; </strong> to move the tiles. Player Two on the right will use <strong> arrow keys </strong>. All tiles with the same number will combine into one.
+				<p><strong><u>HOW TO PLAY</u>:</strong></p>
+				<p><strong>PLAYER ONE</strong> on the <u>LEFT</u> will use <strong> W: &#8593; , A: &#8592;, S: &#8595;, D: &#8594; </strong> to move the tiles.</p>
+				<p><strong>PLAYER TWO</strong> on the <u>RIGHT</u> will use <strong> arrow keys </strong>. All tiles with the same number will combine into one.</p>
 			</div>
 			<button id='new-game'>New Game</button>
 			<button id='restart'>Restart</button>
@@ -112,6 +113,9 @@
 		</div>
 
 	</div>
+	<footer>
+		<p><strong>NOTE:</strong> This game is a recreation of the popular game 2048 created by <a href='http://gabrielecirulli.com/'><strong><u>Gabriele Cirulli</u></strong>.</p>
+	</footer>
 	<script src="js/app.js"></script>
 </body>
 </html>
